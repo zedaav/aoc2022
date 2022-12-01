@@ -14,3 +14,9 @@ class TestD01(AOCPuzzleTester):
 
     def test_step2_input(self):
         self.check_solution(D01Step2Puzzle, "d01.input.txt", 200945)
+
+    def test_malformed(self):
+        try:
+            self.check_solution(D01Step1Puzzle, "d01.malformed.txt", 0)
+        except AssertionError as e:
+            assert "Can't parse calories count" in str(e)

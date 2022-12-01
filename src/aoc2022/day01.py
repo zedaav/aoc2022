@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 from aoc2022.puzzle import AOCPuzzle
@@ -22,6 +23,7 @@ class D01Puzzle(AOCPuzzle):
     def handle_new_elf(self):
         if self.next_elf_calories > 0:
             # New elf
+            logging.info(f"Add new elf with {self.next_elf_calories} calories")
             self.calories.append(self.next_elf_calories)
             self.next_elf_calories = 0
 
@@ -36,7 +38,9 @@ class D01Puzzle(AOCPuzzle):
                 calories_count = int(parsed_line)
                 self.next_elf_calories += calories_count
             except ValueError as e:
-                raise AssertionError(f"Can't parse calories count ('{parsed_line}') at line {index}: {e}")
+                msg = f"Can't parse calories count ('{parsed_line}') at line {index}: {e}"
+                logging.error(msg)
+                raise AssertionError(msg)
         else:
             # New elf
             self.handle_new_elf()
