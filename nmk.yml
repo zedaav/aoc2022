@@ -5,6 +5,3 @@ refs:
 
 config:
     pythonPackage: aoc2022
-
-    pythonIgnoredRules:
-        - E203
