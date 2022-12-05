@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+from typing import Union
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -47,12 +48,12 @@ class D01Puzzle(AOCPuzzle):
 
 
 class D01Step1Puzzle(D01Puzzle):
-    def solve(self) -> int:
+    def solve(self) -> Union[int, str]:
         # Just max of all found calories
         return max(self.calories)
 
 
 class D01Step2Puzzle(D01Puzzle):
-    def solve(self) -> int:
+    def solve(self) -> Union[int, str]:
         # Sort calories, and sum the last 3 ones
         return sum(sorted(self.calories)[-3:])

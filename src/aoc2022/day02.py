@@ -3,7 +3,7 @@ import re
 from abc import ABC, abstractmethod
 from enum import Enum
 from pathlib import Path
-from typing import Tuple
+from typing import Tuple, Union
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -82,7 +82,7 @@ class D02Puzzle(AOCPuzzle):
     def instruction_class(self) -> Instruction:  # pragma: no cover
         pass
 
-    def solve(self) -> int:
+    def solve(self) -> Union[int, str]:
         # Puzzle solution is always the results sum
         return sum(self.scores)
 
