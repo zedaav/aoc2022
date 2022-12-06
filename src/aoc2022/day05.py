@@ -68,7 +68,8 @@ class D05Puzzle(AOCPuzzle):
                 # Add to stack
                 current_stack = "" if crate_pos not in self.stacks else self.stacks[crate_pos]
                 self.stacks[crate_pos] = line[delim_pos + 1] + current_stack
-            else:
+            else:  # pragma: no cover
+                # Doesn't look to be covered... Interpreter optimization maybe?
                 break
 
     @abstractmethod
