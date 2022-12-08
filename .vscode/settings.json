@@ -31,7 +31,8 @@
         "venv",
         "loadme",
         "dynod",
-        "nmk"
+        "nmk",
+        "numpy"
     ],
     "python.analysis.extraPaths": [
         "src"

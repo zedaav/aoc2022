@@ -4,7 +4,7 @@ from tests.base import AOCPuzzleTester
 
 class TestD08(AOCPuzzleTester):
     def test_step1_sample(self):
-        self.check_solution(D08Step1Puzzle, "d08.sample.txt", 0)
+        self.check_solution(D08Step1Puzzle, "d08.sample.txt", 21)
 
     def test_step1_input(self):
         self.check_solution(D08Step1Puzzle, "d08.input.txt", 0)

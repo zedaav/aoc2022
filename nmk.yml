@@ -5,3 +5,10 @@ refs:
 
 config:
     pythonPackage: aoc2022
+
+    pythonPackageRequirements:
+        - numpy # For arrays processing
+
+    vscodeSettingsItems:
+        cSpell.words:
+            - numpy
