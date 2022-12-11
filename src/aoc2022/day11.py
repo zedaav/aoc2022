@@ -24,7 +24,7 @@ class Monkey:
     with_division: bool
     process_count: int = 0
 
-    def process(self) -> Tuple[int, int]:
+    def process(self, all_factors) -> Tuple[int, int]:
         """
         Process next monkey item, and get ready to throw it to another monkey
         """
@@ -35,7 +35,7 @@ class Monkey:
 
         # Process next item
         item = self.items.pop(0)
-        item = self.operation(item)
+        item = self.operation(item) % all_factors  # To avoid dealing with values greater than the product of all divisors
         if self.with_division:
             item = int(item / 3)
         divisible = (item % self.divisor) == 0  # NOQA: S001
@@ -81,6 +81,7 @@ class D11Puzzle(AOCPuzzle):
         self.next_monkey_target_true = 0
         self.next_monkey_target_false = 0
         self.monkeys = {}
+        self.all_factors = 1
 
         # Super call
         super().__init__(input_file)
@@ -111,6 +112,7 @@ class D11Puzzle(AOCPuzzle):
                         self.next_monkey_operation = lambda old: old * int(m.group(2))
             elif pid == PatternID.TEST:
                 self.next_monkey_divisor = int(m.group(1))
+                self.all_factors *= self.next_monkey_divisor
             elif pid == PatternID.IF_TRUE:
                 self.next_monkey_target_true = int(m.group(1))
             else:
@@ -131,22 +133,23 @@ class D11Puzzle(AOCPuzzle):
     def with_division(self) -> bool:  # pragma: no cover
         pass
 
-    def process(self, rounds: int):
+    def process(self, rounds: int, logs_modulo: int = 1):
         # Process cycles
         for r in range(rounds):
             # Process monkeys
             for mid in range(len(self.monkeys)):
                 monkey = self.monkeys[mid]
                 while True:
-                    candidate = monkey.process()
+                    candidate = monkey.process(self.all_factors)
                     if candidate is None:
                         break
                     item, target = candidate
                     self.monkeys[target].items.append(item)
 
-            logging.info(f"== After round {r+1} ==")
-            for mid, monkey in self.monkeys.items():
-                logging.info(f"Monkey {mid} inspected items {monkey.process_count} times.")
+            if (r == 0) or (((r + 1) % logs_modulo) == 0):  # NOQA: S001
+                logging.info(f"== After round {r+1} ==")
+                for mid, monkey in self.monkeys.items():
+                    logging.info(f"Monkey {mid} inspected items {monkey.process_count} times.")
 
         # Result is product of two most active monkeys
         counts = sorted(m.process_count for m in self.monkeys.values())
@@ -172,4 +175,4 @@ class D11Step2Puzzle(D11Puzzle):
 
     def solve(self) -> int:
         # Result is product of two most active monkeys after 10000 rounds
-        return self.process(10000)
+        return self.process(10000, 1000)
