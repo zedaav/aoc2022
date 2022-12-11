@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Union
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -37,7 +36,7 @@ class D06Puzzle(AOCPuzzle):
 
         return parsed_line
 
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> int:
         # Solution is first packet position
         return self.packet_pos
 

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Union
+from typing import List, Union
 
 
 # Base class for puzzle solutions
@@ -26,5 +26,5 @@ class AOCPuzzle(ABC):
         return line.strip("\r\n ")
 
     @abstractmethod
-    def solve(self) -> Union[int, str]:  # pragma: no cover
+    def solve(self) -> Union[int, str, List[str]]:  # pragma: no cover
         pass

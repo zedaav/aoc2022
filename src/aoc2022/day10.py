@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Union
+from typing import List
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -42,7 +42,7 @@ class D10Puzzle(AOCPuzzle):
 
 # Step 1 class
 class D10Step1Puzzle(D10Puzzle):
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> int:
         # Sample values
         result = 0
         for sample in [20, 60, 100, 140, 180, 220]:
@@ -54,7 +54,7 @@ class D10Step1Puzzle(D10Puzzle):
 
 # Step 2 class
 class D10Step2Puzzle(D10Puzzle):
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> List[str]:
         # Render image
         line_length = 40
         rendered_line = ""

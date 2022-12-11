@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Union
+from typing import List
 
 import numpy
 
@@ -59,7 +59,7 @@ class D08Puzzle(AOCPuzzle):
 
 # Step 1 class
 class D08Step1Puzzle(D08Puzzle):
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> int:
         # Count all trees greater than at least one of its neighbors lists
         count = 0
         for (_x, _y), t in self.trees.items():
@@ -73,7 +73,7 @@ class D08Step1Puzzle(D08Puzzle):
 
 # Step 2 class
 class D08Step2Puzzle(D08Puzzle):
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> int:
         # Browse all trees not on the borders
         top_scenic_score = 0
         for y in range(1, len(self.int_lines) - 1):

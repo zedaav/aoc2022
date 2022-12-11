@@ -1,7 +1,6 @@
 import logging
 import re
 from pathlib import Path
-from typing import Union
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -74,14 +73,14 @@ class D07Puzzle(AOCPuzzle):
 
 # Step 1 class
 class D07Step1Puzzle(D07Puzzle):
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> int:
         # Solution is sum of sizes < 100000
         return sum(filter(lambda s: s <= 100000, self.sizes.values()))
 
 
 # Step 2 class
 class D07Step2Puzzle(D07Puzzle):
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> int:
         # Currently used space
         current_used = self.sizes[Path(ROOT_PATH)]
         current_free = 70000000 - current_used

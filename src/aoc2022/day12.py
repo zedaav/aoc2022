@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Union
+from typing import List, Union
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -22,7 +22,7 @@ class D12Puzzle(AOCPuzzle):
 
         return trimmed_line
 
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> Union[int, str, List[str]]:
         # Solution is...
         return 0
 

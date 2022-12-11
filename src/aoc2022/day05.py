@@ -2,7 +2,6 @@ import logging
 import re
 from abc import abstractmethod
 from pathlib import Path
-from typing import Union
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -76,7 +75,7 @@ class D05Puzzle(AOCPuzzle):
     def handle_instruction(self, size: int, from_pos: int, to_pos: int):  # pragma: no cover
         pass
 
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> str:
         # Top level crates
         out = ""
         for pos in range(1, len(self.stacks) + 1):

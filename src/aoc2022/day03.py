@@ -1,7 +1,7 @@
 import logging
 from functools import lru_cache
 from pathlib import Path
-from typing import Tuple, Union
+from typing import Tuple
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -44,7 +44,7 @@ class D03Puzzle(AOCPuzzle):
         # Super call
         super().__init__(input_file)
 
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> int:
         # Sum the priorities
         return sum(priority(c) for c in self.common_items)
 

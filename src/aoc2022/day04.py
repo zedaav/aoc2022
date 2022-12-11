@@ -2,7 +2,7 @@ import logging
 import re
 from abc import abstractmethod
 from pathlib import Path
-from typing import Set, Union
+from typing import Set
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -43,7 +43,7 @@ class D04Puzzle(AOCPuzzle):
     def handle_sections(self, section1: Set[int], section2: Set[int]):  # pragma: no cover
         pass
 
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> int:
         # Solution is overlaps count
         return self.overlaps
 

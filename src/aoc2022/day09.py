@@ -3,7 +3,6 @@ import re
 from abc import abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Union
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -105,7 +104,7 @@ class D09Puzzle(AOCPuzzle):
 
         return trimmed_line
 
-    def solve(self) -> Union[int, str]:
+    def solve(self) -> int:
         # Solution is count of tail positions
         return len(self.tail_positions)
 
