@@ -19,7 +19,6 @@ class D12Puzzle(AOCPuzzle):
         self.int_lines = []
         self.start = None
         self.end = None
-        self.path_candidates = {}
 
         # Super call
         super().__init__(input_file)
@@ -53,22 +52,19 @@ class D12Puzzle(AOCPuzzle):
         return trimmed_line
 
     def get_candidates(self, pos: Tuple[int, int]) -> Set[Tuple[int, int]]:
-        # Already found?
-        if pos not in self.path_candidates:
-            # Check candidates
-            candidates = set()
-            x, y = pos
-            for x_off, y_off in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                n_x, n_y = (x + x_off, y + y_off)
-                if (n_x >= 0) and (n_x < self.map_width) and (n_y >= 0) and (n_y < self.map_height):
-                    cur_height = self.heights_map[y][x]
-                    candidate_height = self.heights_map[n_y][n_x]
-                    if candidate_height - cur_height >= -1:
-                        # Valid candidate
-                        candidates.add((n_x, n_y))
+        # Check candidates
+        candidates = set()
+        x, y = pos
+        for x_off, y_off in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+            n_x, n_y = (x + x_off, y + y_off)
+            if (n_x >= 0) and (n_x < self.map_width) and (n_y >= 0) and (n_y < self.map_height):
+                cur_height = self.heights_map[y][x]
+                candidate_height = self.heights_map[n_y][n_x]
+                if candidate_height - cur_height >= -1:
+                    # Valid candidate
+                    candidates.add((n_x, n_y))
 
-            self.path_candidates[pos] = candidates
-        return set(self.path_candidates[pos])
+        return candidates
 
     def all_paths(self) -> Dict[Tuple[int, int], int]:
         q = [(0, self.end)]
