@@ -32,7 +32,8 @@
         "loadme",
         "dynod",
         "nmk",
-        "numpy"
+        "numpy",
+        "dtype"
     ],
     "python.analysis.extraPaths": [
         "src"

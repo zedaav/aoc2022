@@ -4,13 +4,13 @@ from tests.base import AOCPuzzleTester
 
 class TestD14(AOCPuzzleTester):
     def test_step1_sample(self):
-        self.check_solution(D14Step1Puzzle, "d14.sample.txt", 0)
+        self.check_solution(D14Step1Puzzle, "d14.sample.txt", 24)
 
     def test_step1_input(self):
-        self.check_solution(D14Step1Puzzle, "d14.input.txt", 0)
+        self.check_solution(D14Step1Puzzle, "d14.input.txt", 698)
 
     def test_step2_sample(self):
-        self.check_solution(D14Step2Puzzle, "d14.sample.txt", 0)
+        self.check_solution(D14Step2Puzzle, "d14.sample.txt", 93)
 
     def test_step2_input(self):
-        self.check_solution(D14Step2Puzzle, "d14.input.txt", 0)
+        self.check_solution(D14Step2Puzzle, "d14.input.txt", 28594)
