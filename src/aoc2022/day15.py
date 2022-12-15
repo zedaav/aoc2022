@@ -82,18 +82,32 @@ class D15Step1Puzzle(D15Puzzle):
 # Step 2 class
 class D15Step2Puzzle(D15Puzzle):
     def solve(self, max_offset: int) -> int:
-        array = np.array([[a, b, c, d] for (a, b), (c, d) in self.sensors.items()])
-        beacon_dist = np.abs(array[:, 0:2] - array[:, 2:4]).sum(1)
-        xl, xh = np.array([0, 0]), np.array([max_offset] * 2)
-        stack = [(xl, xh)]
+        # Rearrange sensors, beacons and distances
+        sensors = np.array([[a, b, c, d] for (a, b), (c, d) in self.sensors.items()])
+        beacon_dist = np.abs(sensors[:, 0:2] - sensors[:, 2:4]).sum(1)
 
+        # Prepare top left and bottom right corners
+        tl_corner, br_corner = np.array([0, 0]), np.array([max_offset] * 2)
+        stack = [(tl_corner, br_corner)]
+
+        # Iterate on square portions of the map
         while True:
-            xl, xh = stack.pop()
-            if np.all(xl == xh):
-                return xl[0] * 4_000_000 + xl[1]
-            xm = (xl + xh) // 2  # Partition into up to 4 quadtree child cells.
-            for child_min_max in itertools.product(*(((ll, m), (m + 1, h)) if m < h else ((ll, h),) for ll, m, h in zip(xl, xm, xh))):
-                xl, xh = np.array(child_min_max).T
-                dist = (np.maximum(xh - array[:, 0:2], 0) + np.maximum(array[:, 0:2] - xl, 0)).sum(1)
+            # Next portion
+            tl_corner, br_corner = stack.pop()
+
+            # If it's actually a 1x1 portion, we found the solution
+            if np.all(tl_corner == br_corner):
+                return tl_corner[0] * 4_000_000 + tl_corner[1]
+
+            # Divide in 4 sub-squares
+            xm = (tl_corner + br_corner) // 2
+            for child_min_max in itertools.product(*(((ll, m), (m + 1, h)) if m < h else ((ll, h),) for ll, m, h in zip(tl_corner, xm, br_corner))):
+                # New sub-corners
+                sub_tl_corner, sub_br_corner = np.array(child_min_max).T
+
+                # Reckon distances between every beacon and corners
+                dist = (np.maximum(sub_br_corner - sensors[:, 0:2], 0) + np.maximum(sensors[:, 0:2] - sub_tl_corner, 0)).sum(1)
+
+                # Keep only squares with all beacon distances greater than the original ones
                 if not np.any(dist <= beacon_dist):
-                    stack.append((xl, xh))
+                    stack.append((sub_tl_corner, sub_br_corner))
