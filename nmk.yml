@@ -8,6 +8,7 @@ config:
 
     pythonPackageRequirements:
         - numpy # For arrays processing
+        - sortedcontainers # For sorted lists, etc..
 
     vscodeSettingsItems:
         cSpell.words:
