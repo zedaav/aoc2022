@@ -20,7 +20,6 @@ flake8-bugbear
 setuptools
 wheel
 numpy
-sortedcontainers
 pytest-xdist
 pytest-cov
 pytest-multilog

@@ -1,7 +1,5 @@
 from pathlib import Path
-from typing import Union
-
-from sortedcontainers import SortedDict
+from typing import Set, Tuple
 
 from aoc2022.puzzle import AOCPuzzle
 
@@ -14,8 +12,8 @@ Solutions for https://adventofcode.com/2022/day/18
 class D18Puzzle(AOCPuzzle):
     def __init__(self, input_file: Path):
         # Init puzzle data
-        self.cubes = []
-        self.sorted_cubes = [SortedDict() for _ in range(3)]
+        self.cubes = set()
+        self.droplet_span = 0
 
         # Super call
         super().__init__(input_file)
@@ -24,44 +22,45 @@ class D18Puzzle(AOCPuzzle):
         # Super call
         trimmed_line = super().parse_line(index, line)
 
-        # Split on comma
-        new_cube = [int(c) for c in trimmed_line.split(",")]
-        self.cubes.append(new_cube)
+        # Split on comma to build the new cube tuple
+        new_cube = tuple(int(c) for c in trimmed_line.split(","))
+        self.cubes.add(new_cube)
 
-        # Contribute on sorted dicts for each axis
-        for x in range(3):
-            key = new_cube[x]
-            if key not in self.sorted_cubes[x]:
-                self.sorted_cubes[x][key] = []
-            self.sorted_cubes[x][key].append(new_cube)
+        # Update containing cube dimension
+        for x in new_cube:
+            self.droplet_span = max(self.droplet_span, x)
 
         return trimmed_line
+
+    def get_neighbors(self, x: int, y: int, z: int) -> Set[Tuple]:
+        # Get neighbors cubes for required one
+        return {(x + 1, y, z), (x - 1, y, z), (x, y + 1, z), (x, y - 1, z), (x, y, z + 1), (x, y, z - 1)}
 
 
 # Step 1 class
 class D18Step1Puzzle(D18Puzzle):
-    def solve(self) -> Union[int, str]:
-        # Count cubes
-        cubes_count = len(self.cubes)
-
-        # Iterate to find adjacent faces
-        adjacent_faces_count = 0
-
-        # Do it on each axis
-        for axis in range(3):
-            # Filter consecutive values on this axis
-            axis_keys = self.sorted_cubes[axis].keys()
-            for value, next_value in filter(lambda t: t[0] + 1 == t[1], zip(axis_keys[:-1], axis_keys[1:])):
-                # Find cubes that are equals on the other axis between the two sets
-                for c in self.sorted_cubes[axis][value]:
-                    next_c = list(c)
-                    next_c[axis] = next_value
-                    if next_c in self.sorted_cubes[axis][next_value]:
-                        adjacent_faces_count += 1
-
-        return (cubes_count * 6) - (adjacent_faces_count * 2)
+    def solve(self) -> int:
+        # Just count cubes that are not neighbors of any cube
+        return sum((n not in self.cubes) for c in self.cubes for n in self.get_neighbors(*c))
 
 
 # Step 2 class
 class D18Step2Puzzle(D18Puzzle):
-    pass
+    def solve(self) -> int:
+        # Find all cubes on on exterior of the droplet
+        exterior_cubes = set()
+        todo = [(-1, -1, -1)]
+        while len(todo):
+            # Next cube
+            current = todo.pop()
+            exterior_cubes.add(current)
+
+            # Stack cubes that are:
+            # - neighbors of the current one
+            # - in cube range (no need to go too far)
+            # - but not in the exterior_cubes list
+            # - and not a known cube
+            todo += [s for s in (self.get_neighbors(*current) - self.cubes - exterior_cubes) if all(-1 <= x <= (self.droplet_span + 1) for x in s)]
+
+        # Count exterior cubes adjacent to the droplet
+        return sum((n in exterior_cubes) for c in self.cubes for n in self.get_neighbors(*c))

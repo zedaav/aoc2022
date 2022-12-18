@@ -10,7 +10,7 @@ class TestD18(AOCPuzzleTester):
         self.check_solution(D18Step1Puzzle, "d18.input.txt", 4474)
 
     def test_step2_sample(self):
-        self.check_solution(D18Step2Puzzle, "d18.sample.txt", 0)
+        self.check_solution(D18Step2Puzzle, "d18.sample.txt", 58)
 
     def test_step2_input(self):
-        self.check_solution(D18Step2Puzzle, "d18.input.txt", 0)
+        self.check_solution(D18Step2Puzzle, "d18.input.txt", 2518)
