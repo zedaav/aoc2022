@@ -8,6 +8,7 @@ config:
 
     pythonPackageRequirements:
         - numpy # For arrays processing
+        - mip # Mixed-Integer linear Programs
 
     vscodeSettingsItems:
         cSpell.words:

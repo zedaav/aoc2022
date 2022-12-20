@@ -20,6 +20,7 @@ flake8-bugbear
 setuptools
 wheel
 numpy
+mip
 pytest-xdist
 pytest-cov
 pytest-multilog
