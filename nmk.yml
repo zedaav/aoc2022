@@ -9,6 +9,7 @@ config:
     pythonPackageRequirements:
         - numpy # For arrays processing
         - mip # Mixed-Integer linear Programs
+        - z3-solver
 
     vscodeSettingsItems:
         cSpell.words:

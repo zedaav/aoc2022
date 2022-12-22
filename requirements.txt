@@ -21,6 +21,7 @@ setuptools
 wheel
 numpy
 mip
+z3-solver
 pytest-xdist
 pytest-cov
 pytest-multilog
